@@ -1,0 +1,23 @@
+[
+  {
+    "query": "Please perform a security code review for repository `octocat/Hello-World` on commit `7fd1a60b01f91b314f59955a4e4d4e80d8edf11d`.",
+    "expected_tool_use": [
+      {
+        "tool_name": "get_commit",
+        "tool_input": {
+          "owner": "octocat",
+          "repo": "Hello-World",
+          "sha": "7fd1a60b01f91b314f59955a4e4d4e80d8edf11d"
+        }
+      },
+      {
+        "tool_name": "request_security_issue_approval",
+        "tool_input": {
+          "repo_name": "octocat/Hello-World",
+          "commit_id": "7fd1a60b01f91b314f59955a4e4d4e80d8edf11d"
+        }
+      }
+    ],
+    "reference": "Awaiting human confirmation to create security issue in repository octocat/Hello-World."
+  }
+]

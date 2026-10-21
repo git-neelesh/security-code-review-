@@ -1,0 +1,85 @@
+{
+  "eval_set_id": "security_code_reviewer_eval_suite",
+  "eval_cases": [
+    {
+      "eval_id": "commit_security_review_requests_approval",
+      "conversation": [
+        {
+          "user_content": {
+            "parts": [
+              {
+                "text": "Please perform a security code review for repository `octocat/Hello-World` on commit `7fd1a60b01f91b314f59955a4e4d4e80d8edf11d`."
+              }
+            ]
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Awaiting human confirmation to create a GitHub security issue for octocat/Hello-World on commit 7fd1a60b01f91b314f59955a4e4d4e80d8edf11d."
+              }
+            ]
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "get_commit",
+                "args": {
+                  "owner": "octocat",
+                  "repo": "Hello-World",
+                  "sha": "7fd1a60b01f91b314f59955a4e4d4e80d8edf11d"
+                }
+              },
+              {
+                "name": "request_security_issue_approval",
+                "args": {
+                  "repo_name": "octocat/Hello-World",
+                  "commit_id": "7fd1a60b01f91b314f59955a4e4d4e80d8edf11d"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "eval_id": "rejected_approval_returns_summary_without_issue_creation",
+      "conversation": [
+        {
+          "user_content": {
+            "parts": [
+              {
+                "text": "Review commit `a1b2c3d` in `my-org/payment-service`. If rejected, only provide a brief summary."
+              }
+            ]
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "No GitHub issue was created per your rejection. Here is a brief summary of the security analysis findings and recommended fixes."
+              }
+            ]
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "get_commit",
+                "args": {
+                  "owner": "my-org",
+                  "repo": "payment-service",
+                  "sha": "a1b2c3d"
+                }
+              },
+              {
+                "name": "request_security_issue_approval",
+                "args": {
+                  "repo_name": "my-org/payment-service",
+                  "commit_id": "a1b2c3d"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
