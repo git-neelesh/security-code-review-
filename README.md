@@ -65,13 +65,13 @@ From `/Users/neelesh/ai-projects/kaggle-ai-classes`:
 
 ```bash
 # Interactive terminal prompt (asks y/N when SummaryDecisionAgent pauses):
-python -m security_code_reviewer.workflow --repo owner/repo --commit <commit_sha>
+python -m workflow --repo owner/repo --commit <commit_sha>
 
 # Simulate Human Approval (creates GitHub issue via MCP):
-python -m security_code_reviewer.workflow --repo owner/repo --commit <commit_sha> --decision approve
+python -m workflow --repo owner/repo --commit <commit_sha> --decision approve
 
 # Simulate Human Rejection (skips issue creation and outputs brief summary):
-python -m security_code_reviewer.workflow --repo owner/repo --commit <commit_sha> --decision reject
+python -m workflow --repo owner/repo --commit <commit_sha> --decision reject
 ```
 
 ### 3. Run in ADK Web UI (with Debug Logs & Traces)
