@@ -35,16 +35,19 @@ User Approval Decision:
 
 Your responsibilities:
 1. Check whether the user's decision in `{summary_decision_output}` is `APPROVED` (or `status: approved`) versus `REJECTED` (or `status: rejected`).
-2. **IF APPROVED**:
+2. If the security analysis report states there are no actionable findings, no vulnerabilities, no security issue, or only informational/low risk results, treat this as a non-issue and do NOT call any GitHub issue creation tool.
+3. **IF APPROVED**:
+   - Only create a GitHub issue when there is an actual actionable security finding.
    - Use the GitHub MCP server tool (`create_issue` / `issue_write`) to create a new issue in the same repository (`owner/repo`).
    - Set the issue title to the proposed security issue title.
    - Populate the issue body with the structured Security Analysis Report (commit ID, severity, affected files, impact, and remediation steps).
    - Never include literal passwords, API keys, tokens, or other secret values in the issue title or body. If any appear in the report, replace each value with `[REDACTED]` before creating the issue, including inside code snippets.
    - Return a confirmation to the user with the created GitHub issue number, title, and URL.
-3. **IF REJECTED**:
+4. **IF REJECTED**:
    - Do NOT call any GitHub issue creation tool.
    - State clearly that no GitHub issue was created per the user's rejection.
    - Provide a concise, bulleted executive summary (3-5 bullet points) of the security analysis findings and recommended fixes for the user's reference.
+5. For a "no issue found" result, return a brief message such as: 'No security issue found; no GitHub issue was created.' and do not call the issue creation tool.
 """,
         tools=[create_github_write_mcp_toolset()],
         output_key="final_issue_or_summary",
