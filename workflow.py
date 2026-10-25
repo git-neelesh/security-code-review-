@@ -99,7 +99,7 @@ async def run_security_review_workflow(
     plugins, metrics_plugin = get_observability_plugins()
 
     # Attach plugins directly to the resumable App (required by ADK when passing `app` to Runner)
-    app = (plugins=plugins)
+    app = create_security_review_app(plugins=plugins)
 
     # Initialize InMemorySessionService and Runner
     session_service = InMemorySessionService()

@@ -19,5 +19,33 @@
       }
     ],
     "reference": "Awaiting human confirmation to create security issue in repository octocat/Hello-World."
+  },
+  {
+    "query": "Review commit `a1b2c3d` in `octocat/Hello-World`.",
+    "expected_tool_use": [
+      {
+        "tool_name": "get_commit",
+        "tool_input": {
+          "owner": "octocat",
+          "repo": "Hello-World",
+          "sha": "a1b2c3d"
+        }
+      }
+    ],
+    "reference": "Commit could not be found in the specified repository. Verify the commit ID. No security review was performed and no GitHub issue was created."
+  },
+  {
+    "query": "Review commit `7fd1a60b01f91b314f59955a4e4d4e80d8edf11d` in `invalid-owner/repository-that-does-not-exist`.",
+    "expected_tool_use": [
+      {
+        "tool_name": "get_commit",
+        "tool_input": {
+          "owner": "invalid-owner",
+          "repo": "repository-that-does-not-exist",
+          "sha": "7fd1a60b01f91b314f59955a4e4d4e80d8edf11d"
+        }
+      }
+    ],
+    "reference": "Repository could not be found, or your GitHub token does not have access to it. No security review was performed and no GitHub issue was created."
   }
 ]
