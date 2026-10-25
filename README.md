@@ -75,24 +75,24 @@ python -m workflow --repo owner/repo --commit <commit_sha> --decision approve
 # Simulate Human Rejection (skips issue creation and outputs brief summary):
 python -m workflow --repo owner/repo --commit <commit_sha> --decision reject
 ```
-
 ### 3. Run in ADK Web UI (with Debug Logs & Traces)
 
 ```bash
 adk web --log_level DEBUG
 ```
 #### Sample prompt to run in ADK Web UI:
-    ```text
+```text
         Review repository git-neelesh/code-review-multiagent at commit 1ee83a84.
         When the review is complete, request approval to create a GitHub issue.
-    ```
+```
 When the review reaches `SummaryDecisionAgent`, respond to ADK Web's confirmation request to approve or reject issue creation. The workflow resumes after that response.
 
 ### 4. Run Agent Evaluation
 #### first run 
-    ```bash
+
+```bash
         pip install "google-adk[eval]"
-    ```
+ ```
 
 ### Keep the imports unchanged and add the project directory to Python’s import path when running eval. From security_code_reviewer/, run:
 
