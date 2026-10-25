@@ -4,6 +4,7 @@ from google.adk.agents import LlmAgent
 from google.adk.models.google_llm import Gemini
 from google.genai import types
 
+from fetch_status import skip_agent_after_failed_commit_fetch
 from tools import create_github_write_mcp_toolset
 
 MODEL_NAME = "gemini-3.5-flash-lite"
@@ -16,12 +17,13 @@ retry_config = types.HttpRetryOptions(
 )
 
 
-def IssueReportAgent() -> LlmAgent:
+def issue_report_agent() -> LlmAgent:
     """Creates the final agent that either opens a GitHub issue via MCP or provides a brief summary."""
     return LlmAgent(
         name="IssueReportAgent",
         model=Gemini(model=MODEL_NAME, retry_options=retry_config),
         description="Creates a GitHub issue in the repository if approved, or provides a brief summary if rejected.",
+        before_agent_callback=skip_agent_after_failed_commit_fetch,
         instruction="""You are the Security Issue & Reporting Agent.
 Review the security analysis report and the user's approval decision from the previous stages:
 
@@ -36,7 +38,8 @@ Your responsibilities:
 2. **IF APPROVED**:
    - Use the GitHub MCP server tool (`create_issue` / `issue_write`) to create a new issue in the same repository (`owner/repo`).
    - Set the issue title to the proposed security issue title.
-   - Populate the issue body with the full structured Security Analysis Report (commit ID, severity, affected files, impact, and remediation steps).
+   - Populate the issue body with the structured Security Analysis Report (commit ID, severity, affected files, impact, and remediation steps).
+   - Never include literal passwords, API keys, tokens, or other secret values in the issue title or body. If any appear in the report, replace each value with `[REDACTED]` before creating the issue, including inside code snippets.
    - Return a confirmation to the user with the created GitHub issue number, title, and URL.
 3. **IF REJECTED**:
    - Do NOT call any GitHub issue creation tool.

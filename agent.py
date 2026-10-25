@@ -7,34 +7,11 @@ from google.adk.agents import SequentialAgent
 from google.adk.apps.app import App, ResumabilityConfig
 from google.adk.plugins.base_plugin import BasePlugin
 
-from issue_report_agent import IssueReportAgent
+from issue_report_agent import issue_report_agent
 from observability import get_observability_plugins
-from repo_fetch_agent import repoFetchAgent
-from security_review_agent import securityReviewAgent
-from summary_decision_agent
-import SummaryDecisionAgent
-
-
-def _ensure_google_api_key() -> None:
-    """Loads environment variables from .env (if present) or Kaggle secrets fallback."""
-    try:
-        from dotenv import load_dotenv
-
-        load_dotenv()
-    except ImportError:
-        pass
-
-    if not os.environ.get("GOOGLE_API_KEY"):
-        try:
-            from kaggle_secrets import UserSecretsClient
-
-            os.environ["GOOGLE_API_KEY"] = UserSecretsClient().get_secret("GOOGLE_API_KEY")
-        except Exception:
-            pass
-
-
-_ensure_google_api_key()
-
+from repo_fetch_agent import repo_fetch_agent
+from security_review_agent import security_review_agent
+from summary_decision_agent import summary_decision_agent
 
 def build_root_agent() -> SequentialAgent:
     """Builds a fresh SequentialAgent pipeline with all 4 specialist sub-agents."""
@@ -46,10 +23,10 @@ def build_root_agent() -> SequentialAgent:
             "a GitHub issue or outputs a brief summary."
         ),
         sub_agents=[
-            repoFetchAgent(),
-            securityReviewAgent(),
-            SummaryDecisionAgent(),
-            IssueReportAgent(),
+            repo_fetch_agent(),
+            security_review_agent(),
+            summary_decision_agent(),
+            issue_report_agent(),
         ],
     )
 

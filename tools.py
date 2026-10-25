@@ -19,14 +19,6 @@ GITHUB_MCP_URL = "https://api.githubcopilot.com/mcp/"
 def _get_github_token() -> str:
     """Retrieves GITHUB_TOKEN from environment or Kaggle secrets fallback."""
     token = os.environ.get("GITHUB_TOKEN", "")
-    if not token:
-        try:
-            from kaggle_secrets import UserSecretsClient
-
-            token = UserSecretsClient().get_secret("GITHUB_TOKEN")
-            os.environ["GITHUB_TOKEN"] = token
-        except Exception:
-            pass
     return token
 
 
