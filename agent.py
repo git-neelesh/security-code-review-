@@ -55,3 +55,6 @@ security_review_app = App(
     resumability_config=ResumabilityConfig(is_resumable=True),
     plugins=default_plugins,
 )
+
+# ADK Web looks for an `app` export before falling back to `root_agent`.
+app = security_review_app

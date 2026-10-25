@@ -42,20 +42,20 @@
       ]
     },
     {
-      "eval_id": "rejected_approval_returns_summary_without_issue_creation",
+      "eval_id": "missing_commit_stops_review_without_approval",
       "conversation": [
         {
           "user_content": {
             "parts": [
               {
-                "text": "Review commit `a1b2c3d` in `my-org/payment-service`. If rejected, only provide a brief summary."
+                "text": "Review commit `a1b2c3d` in `octocat/Hello-World`."
               }
             ]
           },
           "final_response": {
             "parts": [
               {
-                "text": "No GitHub issue was created per your rejection. Here is a brief summary of the security analysis findings and recommended fixes."
+                "text": "Commit could not be found in the specified repository. Verify the commit ID. No security review was performed and no GitHub issue was created."
               }
             ]
           },
@@ -64,16 +64,42 @@
               {
                 "name": "get_commit",
                 "args": {
-                  "owner": "my-org",
-                  "repo": "payment-service",
+                  "owner": "octocat",
+                  "repo": "Hello-World",
                   "sha": "a1b2c3d"
                 }
-              },
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "eval_id": "unknown_repository_stops_review_without_approval",
+      "conversation": [
+        {
+          "user_content": {
+            "parts": [
               {
-                "name": "request_security_issue_approval",
+                "text": "Review commit `7fd1a60b01f91b314f59955a4e4d4e80d8edf11d` in `invalid-owner/repository-that-does-not-exist`."
+              }
+            ]
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Repository could not be found, or your GitHub token does not have access to it. Verify the owner/repository name and token permissions. No security review was performed and no GitHub issue was created."
+              }
+            ]
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "get_commit",
                 "args": {
-                  "repo_name": "my-org/payment-service",
-                  "commit_id": "a1b2c3d"
+                  "owner": "invalid-owner",
+                  "repo": "repository-that-does-not-exist",
+                  "sha": "7fd1a60b01f91b314f59955a4e4d4e80d8edf11d"
                 }
               }
             ]

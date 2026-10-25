@@ -67,6 +67,7 @@ def request_security_issue_approval(
     severity_summary: str,
     tool_context: ToolContext,
 ) -> dict:
+    print(f"confirmation-checking[request_security_issue_approval] Invoked with repo_name={repo_name}, commit_id={commit_id}, issue_title={issue_title}")
     """Pauses execution to request human-in-the-loop approval before creating a GitHub issue.
 
     Follows the ADK Long-Running Operation (LRO) pattern from day-2b-agent-tools-best-practices:
