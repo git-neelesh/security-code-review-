@@ -55,8 +55,11 @@ User Input (repo_name, commit_id)
 
 Export your `GOOGLE_API_KEY` and `GITHUB_TOKEN` (or copy `.env.example` to `.env`):
 
+ User python virtual environment: 3.12.x
 ```bash
-source .venv/bin/activate # select python source venv
+source .venv/bin/activate # select python source venv 3.12.x
+pip install -r requirements.txt
+
 export GOOGLE_API_KEY="your-gemini-api-key"
 export GITHUB_TOKEN="your-github-personal-access-token"
 ```
@@ -82,17 +85,17 @@ adk web --log_level DEBUG
 ```
 #### Sample prompt to run in ADK Web UI:
 ```text
-        Review repository git-neelesh/code-review-multiagent at commit 1ee83a84.
-        When the review is complete, request approval to create a GitHub issue.
+    Review repository git-neelesh/code-review-multiagent at commit 1ee83a84.
+    When the review is complete, request approval to create a GitHub issue.
 ```
 When the review reaches `SummaryDecisionAgent`, respond to ADK Web's confirmation request to approve or reject issue creation. The workflow resumes after that response.
 
 ### 4. Run Agent Evaluation
-#### first run 
+
+First run 
 
 ```bash
-        pip install "google-adk[eval]"
- ```
+  pip install "google-adk[eval]"
 
 ### Keep the imports unchanged and add the project directory to Python’s import path when running eval. From security_code_reviewer/, run:
 
